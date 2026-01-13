@@ -32,7 +32,7 @@ import jakarta.validation.Valid;
 
 @Tag(name = "Juegos", description = "Operaciones relacionadas con la gestión de los juegos")
 @RestController
-@RequestMapping("juegos")
+@RequestMapping("/juegos")
 public class JuegoController {
     @Autowired
     JuegoService juegoService;
