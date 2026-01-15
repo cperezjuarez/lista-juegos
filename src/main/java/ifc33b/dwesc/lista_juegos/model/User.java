@@ -34,16 +34,24 @@ public class User {
     private String email;
     
     @Column(nullable = false)
-    private String role = "USER";
+    private String role;
     
     @Column(nullable = false)
-    private boolean enabled = true;
+    private boolean enabled;
     
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public User(String username, String password, String email) {
+        this.setUsername(username);
+        this.setPassword(password);
+        this.setEmail(email);
+        this.setRole("USER");
+        this.setEnabled(true);
+    }
     
     @PrePersist
     protected void onCreate() {

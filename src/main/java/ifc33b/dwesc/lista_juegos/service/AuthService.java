@@ -44,13 +44,7 @@ public class AuthService {
             throw new RuntimeException("El email ya está en uso");
         }
 
-        User user = new User();
-        user.setUsername(request.getUsername());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setEmail(request.getEmail());
-        user.setRole("USER");
-        user.setEnabled(true);
-
+        User user = new User(request.getUsername(), passwordEncoder.encode((request.getPassword())), request.getEmail());
         userRepository.save(user);
 
         return new MessageResponse("Usuario registrado correctamente");

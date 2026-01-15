@@ -9,15 +9,11 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "juegos")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Table(name = "juegos")
 public class Juego {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +34,15 @@ public class Juego {
     @Column(nullable = false)
     @NotNull(message = "Se necesita saber si está comprado o no")
     private Boolean comprado;
+
+    public Juego() {}
+
+    public Juego(String nombre, String categoria, Integer precio, Boolean comprado) {
+        this.setNombre(nombre);
+        this.setCategoria(categoria);
+        this.setPrecio(precio);
+        this.setComprado(comprado);
+    }
 
     public void marcarComoComprado() {
         this.setComprado(true);
