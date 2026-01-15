@@ -1,42 +1,45 @@
 package ifc33b.dwesc.lista_juegos.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ifc33b.dwesc.lista_juegos.dto.LoginRequest;
-import ifc33b.dwesc.lista_juegos.security.JwtUtils;
+import ifc33b.dwesc.lista_juegos.dto.LoginResponse;
+import ifc33b.dwesc.lista_juegos.dto.MessageResponse;
+import ifc33b.dwesc.lista_juegos.dto.RegisterRequest;
+import ifc33b.dwesc.lista_juegos.service.AuthService;
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
     @Autowired
-    private JwtUtils jwtUtils;
+    private AuthService authService;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+
+    @PostMapping("/login") // Loguea al usuario y le devuelve un token
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
         try {
-            Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken         (loginRequest.getUsername(), loginRequest.getPassword())
-            );
-
-            String jwt = jwtUtils.generateJwtToken(loginRequest.getUsername());
-            return ResponseEntity.ok(new JwtResponse(jwt));
-
+            LoginResponse response = authService.login(request);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body("Credenciales incorrectas");
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    
+    @PostMapping("/register") // Registra al usuario y le devuelve un mensaje
+    public ResponseEntity<MessageResponse> register(@Valid @RequestBody RegisterRequest request) {
+        try {
+            MessageResponse response = authService.register(request);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
     }
 
