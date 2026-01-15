@@ -10,9 +10,4 @@ public class LoginRequest {
     
     @NotBlank(message = "Introduce la contraseña")
     private String password;
-
-    public LoginRequest(String username, String password) {
-        this.setUsername(username);
-        this.setPassword(password);
-    }
 }
