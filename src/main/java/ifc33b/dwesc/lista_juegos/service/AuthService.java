@@ -1,10 +1,12 @@
 package ifc33b.dwesc.lista_juegos.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import ifc33b.dwesc.lista_juegos.dto.LoginRequest;
 import ifc33b.dwesc.lista_juegos.dto.LoginResponse;
@@ -14,10 +16,15 @@ import ifc33b.dwesc.lista_juegos.model.User;
 import ifc33b.dwesc.lista_juegos.repository.UserRepository;
 import ifc33b.dwesc.lista_juegos.security.JwtTokenUtil;
 
+@Service
 public class AuthService {
+    @Autowired
     private UserRepository userRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
     private JwtTokenUtil jwtTokenUtil;
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     // Loguear al usuario (Generar y enviar token)
