@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
 
-import ifc33b.dwesc.lista_juegos.dto.JuegoRequest;
-import ifc33b.dwesc.lista_juegos.dto.JuegoResponse;
 import ifc33b.dwesc.lista_juegos.dto.LoginRequest;
 import ifc33b.dwesc.lista_juegos.dto.LoginResponse;
 import ifc33b.dwesc.lista_juegos.dto.MessageResponse;
